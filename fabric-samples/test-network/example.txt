@@ -1,0 +1,55 @@
+export PATH=${PWD}/../bin:$PATH
+export FABRIC_CFG_PATH=$PWD/../config/
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_LOCALMSPID="Org1MSP"
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+export CORE_PEER_ADDRESS=localhost:7051
+
+//Create Grade Sheet
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n basic --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function": "createGradeSheet","Args":["1", "1", "1", "2019-2020", "180201", "Ayasha Jui", "CSE", "SET", "[{\"courseNo\":\"CSE 2211\", \"courseName\": \"Information System Design\", \"creditHours\":\"2.00\", \"letterGrade\":\"B\", \"gradePoint\":\"3.00\"}, {\"courseNo\":\"CSE 2211\", \"courseName\": \"Information System Design\", \"creditHours\":\"2.00\", \"letterGrade\":\"B\", \"gradePoint\":\"3.00\"}, {\"courseNo\":\"CSE 2211\", \"courseName\": \"Information System Design\", \"creditHours\":\"2.00\", \"letterGrade\":\"B\", \"gradePoint\":\"3.00\"},{\"courseNo\":\"CSE 2211\", \"courseName\": \"Information System Design\", \"creditHours\":\"2.00\", \"letterGrade\":\"B\", \"gradePoint\":\"3.00\"}]","honours", "grade_sheet"]}'
+
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n basic --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function": "createGradeSheet","Args":["2", "1", "1", "2019-2020", "180201", "Ayasha Jui", "CSE", "SET", "[{\"courseNo\":\"CSE 2211\", \"courseName\": \"Information System Design\", \"creditHours\":\"2.00\", \"letterGrade\":\"B\", \"gradePoint\":\"3.00\"}, {\"courseNo\":\"CSE 2211\", \"courseName\": \"Information System Design\", \"creditHours\":\"2.00\", \"letterGrade\":\"B\", \"gradePoint\":\"3.00\"}, {\"courseNo\":\"CSE 2211\", \"courseName\": \"Information System Design\", \"creditHours\":\"2.00\", \"letterGrade\":\"B\", \"gradePoint\":\"3.00\"},{\"courseNo\":\"CSE 2211\", \"courseName\": \"Information System Design\", \"creditHours\":\"2.00\", \"letterGrade\":\"B\", \"gradePoint\":\"3.00\"}]","honours", "grade_sheet"]}'
+
+//update
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n basic --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function": "updateGradeSheet","Args":["1", "1", "1", "2020-2021", "180201", "Ayasha Jui", "CSE", "SET", "[{\"courseNo\":\"CSE 2211\", \"courseName\": \"Information System Design\", \"creditHours\":\"2.00\", \"letterGrade\":\"B\", \"gradePoint\":\"3.00\"}, {\"courseNo\":\"CSE 2211\", \"courseName\": \"Information System Design\", \"creditHours\":\"2.00\", \"letterGrade\":\"B\", \"gradePoint\":\"3.00\"}, {\"courseNo\":\"CSE 2211\", \"courseName\": \"Information System Design\", \"creditHours\":\"2.00\", \"letterGrade\":\"B\", \"gradePoint\":\"3.00\"},{\"courseNo\":\"CSE 2211\", \"courseName\": \"Information System Design\", \"creditHours\":\"2.00\", \"letterGrade\":\"B\", \"gradePoint\":\"3.00\"}]","honours", "grade_sheet"]}'
+
+//query Grade Sheet
+peer chaincode query -C mychannel -n basic -c '{"Args":["querySingleGradeSheetbyID", "180201", "1", "honours", "grade_sheet"]}'
+
+
+peer chaincode query -C mychannel -n basic -c '{"Args":["queryAllGradeSheetbyID", "180201", "honours", "grade_sheet"]}'
+
+peer chaincode query -C mychannel -n basic -c '{"Args":["queryAllGradeSheet", "grade_sheet"]}'
+
+//create Transcript
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n basic --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function": "createTranscript","Args":["180222", "honours", "2019-2020","transcript"]}'
+
+//Transcript error
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n basic --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function": "createTranscript","Args":["180201", "honours", "2019-2020","transcript"]}'
+
+//update
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n basic --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function": "updateTranscript","Args":["180222", "honours", "2019-2022","transcript"]}'
+
+//query
+peer chaincode query -C mychannel -n basic -c '{"Args":["querySingleTranscriptbyID", "180222", "honours", "transcript"]}'
+
+peer chaincode query -C mychannel -n basic -c '{"Args":["queryAllTranscript", "transcript"]}'
+
+//Certificate
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n basic --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function": "createCertificate","Args":["180222", "honours", "2021","certificate"]}'
+
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n basic --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function": "createCertificate","Args":["180201", "honours", "2021","certificate"]}'
+
+//update
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C mychannel -n basic --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt" -c '{"function": "updateCertificate","Args":["180222", "honours", "2020","certificate"]}'
+
+
+//query
+peer chaincode query -C mychannel -n basic -c '{"Args":["querySingleCertificatebyID", "180207", "honours", "certificate"]}'
+
+peer chaincode query -C mychannel -n basic -c '{"Args":["queryAllCertificate", "certificate"]}'
+
+peer chaincode query -C mychannel -n basic -c '{"Args":["verify", "180222", "honours", "certificate", "c8beba269e0ad31f6febc63546d5603edab4abf926fb86f2d405dd964b72c02a"]}'
+
+peer chaincode query -C mychannel -n basic -c '{"Args":["verify", "180207", "honours", "certificate", "c8beba269e0ad31f6febc63546d5603edab4abf926fb86f2d405dd964b72c02"]}'
